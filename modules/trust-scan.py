@@ -51,7 +51,7 @@ from sys import argv, stdout
 # Returns       : None
 
 def usage():
-    print "\n\n    remote [-H] [-s] [-l] [-o] [-p] [-i] "
+    print "\n\n    remote [-H] [-s] [-l] [-p] [-i] [-r] "
     print "\n    Purpose  : Scan a trust/key store at given Path with a specided script "
     print "\n               the results can be stored in a Repository for further comparision "
     print "\n"
@@ -59,6 +59,8 @@ def usage():
     print "        -s [--script]    : scan the target with given script"
     print "        -l [--list]      : list all the plugins on a specified path"
     print "        -p [--path]      : path to stores which needs to be scanned"
+    print "        -i [--path]      : input file (can be different for different scripts)"
+    print "        -r [--path]      : repository path (can be different for different scripts)"
     print " \n\n\n"
 
     sys.exit(2)
@@ -120,6 +122,8 @@ pass
 
 def get_path_prefix() :
     indir = os.getcwd()
+    
+    prefix = ""
 
     if (indir.endswith("LAMMA")):
         prefix = "modules/trust-module/"
