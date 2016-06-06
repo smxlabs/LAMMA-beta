@@ -298,7 +298,7 @@ def main(argv):
     pass
 
     if (out_file != ""):
-        rscan.html_footer(out_file, host)
+        rscan.html_footer(out_file)
 
 
     print "[+] Scaning complete...\n\n"
