@@ -233,12 +233,14 @@ pass
 #
 # Returns       : None
 
-def usage():
-    print "\n\n    remote [-i] [-r] [-p]  "
-    print "\n    Purpose  : Scan a remote host with given plugin over SSL/TLS connection"
+def usage(this_script):
+    print "\n\n    %s [-i] [-r] [-p]  " %this_script
+    print "\n      Purpose  : Seacrch for insecurly stored private keys, & collect the"
+    print "        findings in a common repository. This repository can be used to "
+    print "        find multiple instances of a private keys, location and track them."
     print "\n"
-    print "        -i [--help]      : in put a private key file to search similar instances"
-    print "        -r [--repo]      : epository to note and compare the findings"
+    print "        -i [--in]      : in put a private key file to search similar instances"
+    print "        -r [--repo]      : repository to note and compare the findings"
     print "        -p [--path]      : path to search privet key in it"
     print " \n\n\n"
 
@@ -272,24 +274,24 @@ def main(argv):
     path = ""
     repo_file = ""
     in_key_file =""
-
+    this_script = argv[0]
 
     print "We are in Trust module"
 
-    if len(argv) < 1:
-        usage()
+    if len(argv) < 3:
+        usage(this_script)
         sys.exit(2)
     pass  # if block
 
     # --- try block
 
     try:
-        opts, args = getopt.getopt(argv, "r:i:p:",
+        opts, args = getopt.getopt(argv[1:], "r:i:p:",
                                    ["repo=", "in=", "path="])
 
 
     except getopt.GetoptError:
-        usage()
+        usage(this_script)
         sys.exit(2)
     pass  # TRY BLOCK
 
@@ -325,6 +327,6 @@ pass
 # Kick off the script
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    main(sys.argv[0:])
 
 pass  # IF BLOCK

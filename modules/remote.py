@@ -65,8 +65,8 @@ pass
 #
 # Returns       : None
 
-def usage():
-    print "\n\n    remote [-H] [-s] [-l] [-o] [-i] [-p] [-h] "
+def usage(script):
+    print "\n\n    %s [-H] [-s] [-l] [-o] [-i] [-p] [-h] " %script
     print "\n    Purpose  : Scan a remote host with given plugin over SSL/TLS connection"
     print "\n"
     print "        -H [--help]      : prints this usage help"
@@ -141,7 +141,7 @@ def main(argv):
 
     # Initialize the variables
 
-
+    this_script = argv[0]
     script_set = ""
     #report_path = "/home/evader/Desktop/PROJECTS/LAMMA/BETA/reports/"
     out_file = ""
@@ -155,20 +155,20 @@ def main(argv):
 
     # ---- Show the usage for too few arguments
 
-    if len(argv) < 1:
-        usage()
+    if len(argv) < 3:
+        usage(this_script)
         sys.exit(2)
     pass  # if block
 
     # --- try block
 
     try:
-        opts, args = getopt.getopt(argv, "H:s:l:o:i:p:h:",
+        opts, args = getopt.getopt(argv[1:], "H:s:l:o:i:p:h:",
                                    ["help=", "script=", "list", "out=", "in=", "port=", "host="])
 
 
     except getopt.GetoptError:
-        usage()
+        usage(this_script)
         sys.exit(2)
     pass  # TRY BLOCK
 
@@ -176,7 +176,7 @@ def main(argv):
 
     for opt, arg in opts:
         if opt in ("-H", "--help"):
-            usage()
+            usage(this_script)
 
         elif opt in ("-s", "--script"):
             script_set = arg
@@ -311,6 +311,6 @@ pass  # main
 # Kick off the script
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    main(sys.argv[0:])
 
 pass  # IF BLOCK

@@ -13,7 +13,7 @@
 #    Plugin Purpose :   Invokes the scanning of trust stores and key stores
 #
 #
-#    Plugin Author  :   @ahatti
+#    Plugin Author  :   @ajithatti
 #
 #    Plugin Version :   0.0.1
 #    Plugin Status  :   beta
@@ -50,15 +50,15 @@ from sys import argv, stdout
 #
 # Returns       : None
 
-def usage():
-    print "\n\n    remote [-H] [-s] [-l] [-o] [-p] [-i] "
+def usage(script):
+    print "\n\n    %s [-H] [-s] [-l] [-o] [-p] [-i] " %script
     print "\n    Purpose  : Scan a trust/key store at given Path with a specided script "
     print "\n               the results can be stored in a Repository for further comparision "
     print "\n"
     print "        -H [--help]      : prints this usage help"
     print "        -s [--script]    : scan the target with given script"
     print "        -l [--list]      : list all the plugins on a specified path"
-    print "        -p [--path]      : path to stores which needs to be scanned"
+    print "        -p [--path]      : path of Key or Certificate store to be scanned"
     print " \n\n\n"
 
     sys.exit(2)
@@ -154,7 +154,7 @@ def main(argv):
 
     # Initialize the variables
 
-
+    this_script = argv[0]
     script_set = ""
     #report_path = "/home/evader/Desktop/PROJECTS/LAMMA/BETA/reports/"
     out_file = ""
@@ -169,20 +169,20 @@ def main(argv):
 
     print "We are in Trust module"
 
-    if len(argv) < 1:
-        usage()
+    if len(argv) < 3:
+        usage(this_script)
         sys.exit(2)
     pass  # if block
 
     # --- try block
 
     try:
-        opts, args = getopt.getopt(argv, "H:s:l:p:i:r:",
+        opts, args = getopt.getopt(argv[1:], "H:s:l:p:i:r:",
                                    ["help=", "script=", "list", "path", "in", "repo"])
 
 
     except getopt.GetoptError:
-        usage()
+        usage(this_script)
         sys.exit(2)
     pass  # TRY BLOCK
 
@@ -191,7 +191,7 @@ def main(argv):
     for opt, arg in opts:
 
         if opt in ("-H", "--help"):
-            usage()
+            usage(this_script)
 
         elif opt in ("-s", "--script"):
             script_set = arg
@@ -263,6 +263,6 @@ pass  # main
 # Kick off the script
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    main(sys.argv[0:])
 
 pass  # IF BLOCK

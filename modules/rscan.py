@@ -13,7 +13,7 @@
 #    Plugin Purpose :   Invokes scanning of a given host with specialized plugins.
 #
 #
-#    Plugin Author  :   @ahatti
+#    Plugin Author  :   @ajithatti
 #
 #    Plugin Version :   0.0.1
 #    Plugin Status  :   beta
