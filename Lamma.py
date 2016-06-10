@@ -39,13 +39,27 @@ class main(Cmd):
  
     \n\n"""
 
-    #doc_header = 'Command Options'
-    #misc_header = 'misc_header'
-    #undoc_header = 'undoc_header'
     prompt = 'LAMMA : '
-    
-    ruler = '-'
 
+    Cmd.colors = True
+
+    Cmd.doc_header = """Welcome to LAMMA : \n
+Primary Commands
+----------------------------------------------
+
+remote  -   module to test a remote server
+crypto  -   module to test the quality of basic cryptographic schemes
+source  -   module to find use of weak and deprecated cipher schemes in source code
+trust   -   module to detect - insecure storage of private keys, un-trusted certificates
+
+
+All commands supported by LAMMA Shell
+---------------------------------------------
+"""
+    Cmd.misc_header = ""
+    Cmd.undoc_header = """\n\nWant \'help\' or 'exit' LAMMA?
+---------------------------------------------
+"""
 
     def do_remote(self, line):
         """  Scans the remote host and reports the SSL/TLS configuration profile & applicable vulnerabilities\n
