@@ -48,6 +48,53 @@ from OpenSSL.SSL import SSLv23_METHOD, TLSv1_METHOD, TLSv1_2_METHOD, Context, Co
 
 
 
+
+# Plugin Informaiton
+
+# -------------------------------------------------------------------------------
+# Function      :   cert_timeline_analysis()
+#
+# Purpose       :   Based on certificate "start_date", lists out SSL/TLS vulnerabilities
+#                   which can compromise the Private key.
+#
+# Parameters    :   certificate_start_date
+#
+# Returns       :   True if any vulnerability is applicable else false
+
+
+def cert_timeline_analysis (cert_start_date, sink):
+
+
+    change_cert = False
+    vuln_dict = {   "20160103" :    "DROWN : Decrypting RSA using Obsolete and Weakened eNcryption. \n\t\t Applicable CVES - CVE-2016-0800, CVE-2016-0703, CVE-2015-0293, CVE-2016-0704 \n",
+
+                    "20140304" :    "HEART BLEED :The buffer-over-read vulnerability of the Heartbeat module \n\t\t Applicable CVEs - CVE-2014-0160 \n"
+                }
+
+
+    print "\nCertificate Time Line Analysis : \n"
+    for vdate in vuln_dict:
+        if (int(cert_start_date) <= int(vdate)):
+
+            change_cert = True
+            log ("\t[ALERT] The private key might be compromised due to  :\n\t %s" %vuln_dict[vdate], sink)
+        pass
+    pass
+
+    if(change_cert):
+        log ("\t[NOTE] Certificate Timeline analysis is an experimental feture. For precaution you can renew your private key and the certificate\n", sink )
+    else:
+        log ("\t[INFO] No vulnerability found in recent time which could have compromised your private keys\n", sink)
+
+    return change_cert
+
+pass
+
+
+
+
+
+
 # Plugin Informaiton
 
 # -------------------------------------------------------------------------------
@@ -302,6 +349,9 @@ def main(argv):
     cert_ends = cert.get_notAfter()
 
     log("\nStart Date : " + cert_starts, sink)
+
+    cert_timeline_analysis(cert_starts[:8], sink)
+
     log("\nEnd Date   : " + cert_ends, sink)
 
 
